@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Donation;
-use Veritrans_Config;
-use Veritrans_Snap;
-use Veritrans_Notification;
+use Midtrans\Config;
+use Midtrans\Snap;
+use Midtrans\Notification;
 
 class DonationController extends Controller
 {
@@ -28,10 +28,10 @@ class DonationController extends Controller
     {
         $this->request = $request;
         // Set midtrans configuration
-        Veritrans_Config::$serverKey = config('services.midtrans.serverKey');
-        Veritrans_Config::$isProduction = config('services.midtrans.isProduction');
-        Veritrans_Config::$isSanitized = config('services.midtrans.isSanitized');
-        Veritrans_Config::$is3ds = config('services.midtrans.is3ds');
+        Config::$serverKey = config('services.midtrans.serverKey');
+        Config::$isProduction = config('services.midtrans.isProduction');
+        Config::$isSanitized = config('services.midtrans.isSanitized');
+        Config::$is3ds = config('services.midtrans.is3ds');
     }
 
     /**
@@ -98,7 +98,7 @@ class DonationController extends Controller
                 ]
             ];
             
-            $snapToken = Veritrans_Snap::getSnapToken($payload);
+            $snapToken = Snap::getSnapToken($payload);
             $donation->snap_token = $snapToken;
             $donation->save();
             
@@ -118,8 +118,7 @@ class DonationController extends Controller
      */
     public function notificationHandler(Request $request)
     {
-        $notif = new Veritrans_Notification();
-        \DB::transaction(function() use($notif) {
+        $notif = new Notification();
 
           $transaction = $notif->transaction_status;
           $type = $notif->payment_type;
@@ -177,8 +176,5 @@ class DonationController extends Controller
 
           }
 
-        });
-
-        return;
     }
 }
