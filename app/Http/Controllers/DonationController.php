@@ -40,10 +40,15 @@ class DonationController extends Controller
      * @return \Illuminate\View\View
      */
     public function index()
+    {        
+        return view('home');
+    }
+
+    public function listDonatur()
     {
         $data['donations'] = Donation::orderBy('id', 'desc')->paginate(8);
         
-        return view('donation', $data);
+        return view('list-donatur', $data);
     }
 
     /**

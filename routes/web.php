@@ -19,5 +19,6 @@ use App\Http\Controllers\DonationController;
 // });
 
 Route::get('/', [DonationController::class, 'index'])->name('donation');
+Route::get('/donatur', [DonationController::class, 'listDonatur'])->name('list.donatur');
 Route::post('/donation/store', [DonationController::class, 'submitDonation'])->name('donation.store');
 Route::post('/notification/handler', [DonationController::class, 'notificationHandler'])->name('notification.handler');
