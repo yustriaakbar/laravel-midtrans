@@ -98,7 +98,7 @@ function (data, status) {
             // Optional
             onPending: function (result) {
                 console.log("pending")
-                location.reload();
+                window.location.href = "{{ route('list.donatur')}}";
             },
             // Optional
             onError: function (result) {
